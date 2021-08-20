@@ -1,0 +1,48 @@
+@use "../../styles" as *;
+
+.callingPage {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 105%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  border-radius: 0 0 20px 20px;
+  align-items: center;
+  transition: 0.3s ease-in-out;
+
+  &.show {
+    left: 0;
+  }
+
+  .callingPage__callingText {
+    color: rgb(235, 225, 225);
+    font-size: 1.2rem;
+  }
+
+  .callingPage__incomingCallName {
+    margin-top: 30px;
+    font-size: 1.5rem;
+    color: rgb(235, 225, 225);
+  }
+
+  .callingPage_ball {
+    width: 5px;
+    height: 5px;
+    display: inline-block;
+    background-color: rgb(235, 225, 225);
+    border-radius: 50%;
+    animation: 1s infinite animateBall;
+    margin-left: 5px;
+
+    &.second {
+      animation-delay: 0.2s;
+    }
+
+    &.third {
+      animation-delay: 0.4s;
+    }
+  }
+}

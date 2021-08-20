@@ -1,0 +1,98 @@
+.btn {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 1rem;
+  background-color: rgb(30, 131, 55);
+  text-transform: capitalize;
+  font-weight: 600;
+  color: white;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    background-color: darken(rgb(30, 131, 55), 15%);
+  }
+}
+
+@keyframes animateDown {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes animateUp {
+  0% {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes changeBg {
+  0% {
+    left: 0%;
+  }
+  19% {
+    left: 0%;
+  }
+  20% {
+    left: -100%;
+  }
+  39% {
+    left: -100%;
+  }
+  40% {
+    left: -200%;
+  }
+  59% {
+    left: -200%;
+  }
+  60% {
+    left: -300%;
+  }
+  79% {
+    left: -300%;
+  }
+  80% {
+    left: -400%;
+  }
+  99% {
+    left: -400%;
+  }
+  100% {
+    left: -500%;
+  }
+}
+
+@keyframes animateBall {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes changeOpacity {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
+}

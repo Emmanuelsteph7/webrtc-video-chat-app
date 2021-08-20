@@ -1,0 +1,17 @@
+@mixin minWidth($arg) {
+  @media screen and (min-width: $arg) {
+    @content;
+  }
+}
+
+@mixin minHeight($arg) {
+  @media screen and (min-height: $arg) {
+    @content;
+  }
+}
+
+@mixin minWidthHeight($arg1, $arg2) {
+  @media screen and (min-width: $arg1) and (min-height: $arg2) {
+    @content;
+  }
+}

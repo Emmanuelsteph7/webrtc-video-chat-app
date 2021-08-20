@@ -1,0 +1,54 @@
+@use "../../styles" as *;
+
+.controls {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 25%;
+  // background-color: rgba(0, 0, 0, 0.9);
+  // background-image: linear-gradient(rgba(30, 131, 55, 0.3), rgb(30, 131, 55));
+
+  &.videoPage {
+    height: 100%;
+    z-index: 2;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.9));
+  }
+
+  .controls__answer,
+  .controls__hangUp {
+    margin: 0 auto 20px;
+    border: none;
+    border-radius: 30%;
+    outline: none;
+    padding: 1rem;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: white;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    animation: animateBall ease-in-out infinite 1.2s;
+  }
+
+  .controls__hangUp {
+    background-color: red;
+    animation-delay: 0.5s;
+
+    &:hover {
+      background-color: darken(red, 20%);
+    }
+  }
+
+  .controls__answer {
+    background-color: rgb(30, 131, 55);
+
+    &:hover {
+      background-color: darken(rgb(30, 131, 55), 20%);
+    }
+  }
+}

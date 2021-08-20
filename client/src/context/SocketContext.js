@@ -5,6 +5,7 @@ import Peer from "simple-peer";
 const SocketContext = createContext();
 
 const socket = io.connect("http://localhost:5000");
+// const socket = io.connect("https://webrtc-video-chap-app.herokuapp.com/");
 
 const ContextProvider = ({ children }) => {
   const [stream, setStream] = useState(null);
@@ -13,6 +14,8 @@ const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
   const [callEnded, setCallEnded] = useState(false);
   const [name, setName] = useState("");
+  const [idToCall, setIdToCall] = useState("");
+  const [clickAnswer, setClickAnswer] = useState(false);
 
   const myVideo = useRef();
   const userVideo = useRef();
@@ -20,17 +23,6 @@ const ContextProvider = ({ children }) => {
 
   // The MediaDevices.getUserMedia() method prompts the user for permission to use a media input which produces a MediaStream with tracks containing the requested types of media.
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((currentStream) => {
-        setStream(currentStream);
-
-        myVideo.current.srcObject = currentStream;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
     socket.on("me", (id) => setMe(id));
 
     socket.on("calluser", ({ from, name: callerName, signal }) => {
@@ -38,48 +30,81 @@ const ContextProvider = ({ children }) => {
     });
   }, []);
 
-  const answerCall = () => {
-    setCallAccepted(true);
-
-    const peer = new Peer({ initiator: false, trickle: false, stream });
-
-    peer.on("signal", (data) => {
-      socket.emit("answercall", { signal: data, to: call.from });
-    });
-
-    peer.on("stream", (currentStream) => {
-      userVideo.current.srcObject = currentStream;
-    });
-
-    peer.signal(call.signal);
-
-    connectionRef.current = peer;
-  };
-
-  const callUser = (id) => {
-    console.log("calluser");
-    const peer = new Peer({ initiator: true, trickle: false, stream });
-
-    peer.on("signal", (data) => {
-      socket.emit("calluser", {
-        userToCall: id,
-        signalData: data,
-        from: me,
-        name,
+  const answerCall = async () => {
+    try {
+      const stream2 = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
       });
-    });
 
-    peer.on("stream", (currentStream) => {
-      userVideo.current.srcObject = currentStream;
-    });
+      setStream(stream2);
 
-    socket.on("callaccepted", (signal) => {
+      myVideo.current.srcObject = stream2;
+
       setCallAccepted(true);
 
-      peer.signal(signal);
-    });
+      const peer = new Peer({
+        initiator: false,
+        trickle: false,
+        stream: stream2,
+      });
 
-    connectionRef.current = peer;
+      peer.on("signal", (data) => {
+        socket.emit("answercall", { signal: data, to: call.from });
+      });
+
+      peer.on("stream", (currentStream) => {
+        userVideo.current.srcObject = currentStream;
+      });
+
+      peer.signal(call.signal);
+
+      connectionRef.current = peer;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const callUser = async (id) => {
+    try {
+      const stream2 = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+
+      setStream(stream2);
+
+      myVideo.current.srcObject = stream2;
+
+      const peer = new Peer({
+        initiator: true,
+        trickle: false,
+        stream: stream2,
+      });
+
+      peer.on("signal", (data) => {
+        socket.emit("calluser", {
+          userToCall: id,
+          signalData: data,
+          from: me,
+          name,
+        });
+      });
+
+      peer.on("stream", (currentStream) => {
+        userVideo.current.srcObject = currentStream;
+      });
+
+      socket.on("callaccepted", (signal) => {
+        setCallAccepted(true);
+
+        peer.signal(signal);
+      });
+
+      connectionRef.current = peer;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const leaveCall = () => {
@@ -98,6 +123,7 @@ const ContextProvider = ({ children }) => {
         myVideo,
         userVideo,
         stream,
+        setStream,
         name,
         setName,
         callEnded,
@@ -105,6 +131,10 @@ const ContextProvider = ({ children }) => {
         callUser,
         leaveCall,
         answerCall,
+        idToCall,
+        setIdToCall,
+        clickAnswer,
+        setClickAnswer,
       }}
     >
       {children}

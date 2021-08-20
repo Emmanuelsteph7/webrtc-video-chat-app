@@ -1,0 +1,54 @@
+@use "../../styles" as *;
+
+.call {
+  position: absolute;
+  background-color: white;
+  bottom: -50%;
+  width: 100%;
+  left: 0;
+  transition: 0.3s ease-in-out;
+
+  &.show {
+    bottom: 0;
+  }
+
+  .call__container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 20px auto;
+    max-width: 960px;
+
+    @include minWidth(600px) {
+      margin: 40px auto 60px;
+    }
+
+    @include minWidth(992px) {
+      width: 72%;
+    }
+  }
+
+  .call__input {
+    padding: 1rem;
+    width: 100%;
+    outline: none;
+    color: black;
+    margin-top: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: rgb(235, 225, 225);
+    transition: 0.3s ease-in-out;
+
+    &:focus {
+      border: 1px solid rgb(30, 131, 55);
+      background-color: white;
+    }
+  }
+
+  .call__btn {
+    margin-top: 10px;
+
+    @include minWidthHeight(600px, 800px) {
+      margin-top: 25px;
+    }
+  }
+}
