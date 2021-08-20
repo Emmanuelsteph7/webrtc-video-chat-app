@@ -4,8 +4,8 @@ import Peer from "simple-peer";
 
 const SocketContext = createContext();
 
-const socket = io.connect("http://localhost:5000");
-// const socket = io.connect("https://webrtc-video-chap-app.herokuapp.com/");
+// const socket = io.connect("http://localhost:5000");
+const socket = io.connect("https://webrtc-video-chap-app.herokuapp.com/");
 
 const ContextProvider = ({ children }) => {
   const [stream, setStream] = useState(null);
