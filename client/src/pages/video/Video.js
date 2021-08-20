@@ -2,8 +2,6 @@ import VideoControls from "components/videoControls/VideoControls";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { SocketContext } from "../../context/SocketContext";
-import CallingPage from "components/callingPage/CallingPage";
-import IncomingCallPage from "components/incomingCallPage/IncomingCallPage";
 import "./video.scss";
 
 const Video = ({ show }) => {
@@ -30,7 +28,7 @@ const Video = ({ show }) => {
       answerCall();
       setClickAnswer(false);
     }
-  }, []);
+  }, [answerCall, callUser, idToCall, clickAnswer, setClickAnswer]);
 
   return (
     <div className={`video ${show && "show"}`}>

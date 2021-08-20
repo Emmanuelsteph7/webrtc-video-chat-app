@@ -2,16 +2,13 @@ import { useContext } from "react";
 import { ImPhoneHangUp } from "react-icons/im";
 import { MdCall } from "react-icons/md";
 import { SocketContext } from "../../context/SocketContext";
-import { useHistory } from "react-router-dom";
 import "./videoControls.scss";
 
 const VideoControls = ({ hang, answer, videoFunc, incomingCall }) => {
   const { leaveCall, answerCall } = useContext(SocketContext);
-  const history = useHistory();
 
   const handleAnswer = () => {
     answerCall();
-    // videoFunc(true);
   };
 
   const handleHang = () => {
